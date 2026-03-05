@@ -1,0 +1,30 @@
+name: Energy Anti-Pattern Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  green-code:
+    name: Green Code Analyzer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Analyze energy anti-patterns
+        uses: navin2312/green-code-analyzer@main
+        id: green
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          fail-on-issues: 'false'
+          severity-threshold: 'low'
+
+      - name: Print result
+        run: |
+          echo "Grade  : ${{ steps.green.outputs.grade }}"
+          echo "Score  : ${{ steps.green.outputs.energy-score }}"
+          echo "Issues : ${{ steps.green.outputs.findings-count }}"
