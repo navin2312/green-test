@@ -22,6 +22,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           fail-on-issues: 'false'
           severity-threshold: 'low'
+          groq-api-key: ${{ secrets.GROQ_API_KEY }}
 
       - name: Print result
         run: |
